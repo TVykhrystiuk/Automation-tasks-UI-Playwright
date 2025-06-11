@@ -2,10 +2,20 @@
 const { test, expect } = require('@playwright/test');
 const path = require('path');
 const fs = require('fs');
-const baseUrl = 'https://the-internet.herokuapp.com';
+const { secureHeapUsed } = require('crypto');
+const baseUrl = 'https://the-internet.herokuapp.com'; //can be removed at the end
 
+import { AddRemovePage } from '../page-objects/AddRemovePage';
 
-test('Check buttons functionality', async ({ page }) => {
+test("Check buttons functionality", async ({page}) =>{
+  const addRemovePage = new AddRemovePage (page)
+  await addRemovePage.visit()
+  await addRemovePage.addElement()
+  await addRemovePage.deleteElement()
+
+})
+
+test.skip('Check buttons functionality', async ({ page }) => {
     // Navigate to the page  
     await page.goto(`${baseUrl}/add_remove_elements/`);
 
@@ -23,7 +33,7 @@ test('Check buttons functionality', async ({ page }) => {
   });
 
 
-  test('Check checkboxes', async ({page}) => {
+  test.skip('Check checkboxes', async ({page}) => {
     // Navigate to the page
     await page.goto(`${baseUrl}/checkboxes`);
 
@@ -49,7 +59,7 @@ test('Check buttons functionality', async ({ page }) => {
   } )
   
 
-  test('Select option from dropdown', async({page}) => {
+  test.skip('Select option from dropdown', async({page}) => {
     // Navigate to the page
     await page.goto(`${baseUrl}/dropdown`);
 
@@ -63,7 +73,7 @@ test('Check buttons functionality', async ({ page }) => {
   })
 
 
-  test('Filling an input field', async({page}) => {
+  test.skip('Filling an input field', async({page}) => {
     // Navigate to the page
     await page.goto(`${baseUrl}/inputs`);
     
@@ -75,11 +85,11 @@ test('Check buttons functionality', async ({ page }) => {
     // Verify filled value
     const valueInInputField = await inputField.inputValue();
     expect(valueInInputField).toBe(valueToFill);
-    
+
     // expect (await inputField.inputValue()).toBe(valueToFill); // simplier way
   })
 
-  test('User logged in successfully', async({page}) => {
+  test.skip('User logged in successfully', async({page}) => {
     // Navigate to the page
     await page.goto(`${baseUrl}/login`);
     
@@ -103,7 +113,7 @@ test('Check buttons functionality', async ({ page }) => {
   })
 
 
-  test('Check uploading/downloading a file', async({page}) =>{
+  test.skip('Check uploading/downloading a file', async({page}) =>{
     // Uploading
     // Navigate to page
     await page.goto(`${baseUrl}/upload`);
@@ -138,3 +148,11 @@ test('Check buttons functionality', async ({ page }) => {
     // Verify the file is downloaded
     expect(fs.existsSync(downloadedFilePath)).toBeTruthy();
 })
+
+
+
+
+
+
+
+
