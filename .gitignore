@@ -3,4 +3,4 @@ node_modules/
 /playwright-report/
 /playwright/.cache/
 /tests/algorithms.spec/
-/test-examples/
+/tests-examples/
