@@ -1,13 +1,61 @@
 import { test, expect } from "@playwright/test";
 import { AddRemovePage } from '../page-objects/AddRemovePage';
 
+
 test("Check buttons functionality", async ({page}) =>{
-  const addRemove = new AddRemovePage (page)
+  const addRemovePage = new AddRemovePage (page)
+  await addRemovePage.visit()
 
-  await addRemove.visit()
-  await addRemove.addElement()
-  await expect(addRemove.deleteButton).toBeVisible()
+  await addRemovePage.addElement()
+  await expect(addRemovePage.deleteButton).toBeVisible()
 
-  await addRemove.deleteElement()
-  await expect(addRemove.deleteButton).not.toBeVisible()
+  await addRemovePage.deleteElement()
+  await expect(addRemovePage.deleteButton).not.toBeVisible()
+})
+
+
+test('Add and remove multiple elements', async ({page})=>{
+  const addRemovePage = new AddRemovePage (page)
+  await addRemovePage.visit()  
+
+  const count = 15;
+  
+  for(let i = 0; i < count; i++){
+    await addRemovePage.addElement()
+  }
+
+  await expect(addRemovePage.deleteButton).toHaveCount(count)
+
+  for(let i = 0; i < count; i++){
+    await addRemovePage.deleteElement()
+  }
+
+  await expect(addRemovePage.deleteButton).toHaveCount(0)
+}) 
+
+
+test('Delete specific element (nth)', async ({page}) =>{
+  const addRemovePage = new AddRemovePage (page)
+  await addRemovePage.visit()
+
+  // Add 3 elements
+  for(let i = 0; i < 3; i++){
+    await addRemovePage.addElement()
+  }
+
+  await expect(addRemovePage.deleteButton).toHaveCount(3)
+
+  // Remove the second button (index 1)
+  await addRemovePage.deleteElementAt(1)
+
+  // Verify that only 2 buttons remain
+  await expect(addRemovePage.deleteButton).toHaveCount(2)
+})
+
+
+test('Negative: No delete buttons are present initially', async ({page}) =>{
+  const addRemovePage = new AddRemovePage(page)
+  await addRemovePage.visit()
+
+  await expect(addRemovePage.deleteButton).toHaveCount(0)
 })
