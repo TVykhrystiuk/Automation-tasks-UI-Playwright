@@ -1,18 +1,17 @@
 export class CheckboxesPage{
-    
     constructor (page) {
-        this.page = page
-        this.checkboxes = page.locator('input[type="checkbox"]')
+        this.page = page;
+        this.checkboxes = page.locator('input[type="checkbox"]');
     }  
 
-    visit = async () =>{
-        await this.page.goto('/checkboxes')
+    async visit() {
+        await this.page.goto('/checkboxes');
     }
 
     async checkAll() {
-        const count = await this.checkboxes.count()
+        const count = await this.checkboxes.count();
         for (let i = 0; i < count; i++) {
-            const checkbox = this.checkboxes.nth(i)
+            const checkbox = this.checkboxes.nth(i);
         if (!(await checkbox.isChecked())) {
             await checkbox.check();
         }
@@ -22,7 +21,7 @@ export class CheckboxesPage{
     async uncheckAll() {
         const count = await this.checkboxes.count();
         for (let i = 0; i < count; i++) {
-            const checkbox = this.checkboxes.nth(i)
+            const checkbox = this.checkboxes.nth(i);
             if (await checkbox.isChecked()) {
                 await checkbox.uncheck()
             }
@@ -38,8 +37,8 @@ export class CheckboxesPage{
     }
 
     async toggleCheckboxAt(index) {
-        const checkbox = this.checkboxes.nth(index)
-        const isChecked = await checkbox.isChecked()
+        const checkbox = this.checkboxes.nth(index);
+        const isChecked = await checkbox.isChecked();
         if (isChecked) {
             await checkbox.uncheck()
         } else {

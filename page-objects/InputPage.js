@@ -27,8 +27,8 @@ export class InputPage{
     }
 
     async incrementValue() {
-    await this.inputField.focus();
-    await this.page.keyboard.press('ArrowUp');
+        await this.inputField.focus();
+        await this.page.keyboard.press('ArrowUp');
     }
 
     async decrementValue() {

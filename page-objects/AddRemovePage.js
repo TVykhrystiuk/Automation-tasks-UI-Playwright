@@ -1,8 +1,8 @@
 export class AddRemovePage{
     constructor (page) {
-        this.page = page
-        this.addElementButton = page.getByRole('button', { name: 'Add Element' })
-        this.deleteButton = page.locator('button.added-manually')
+        this.page = page;
+        this.addElementButton = page.getByRole('button', { name: 'Add Element' });
+        this.deleteButton = page.locator('button.added-manually');
     }
 
     visit = async () =>{
@@ -10,20 +10,20 @@ export class AddRemovePage{
     }
 
     addElement = async () =>{
-        await this.addElementButton.click()
+        await this.addElementButton.click();
     }
 
     deleteElement = async () =>{
-        const count = await this.deleteButton.count()
+        const count = await this.deleteButton.count();
         if (count > 0){
-            await this.deleteButton.nth(0).click()
+            await this.deleteButton.nth(0).click();
         }  
     }
 
     deleteElementAt = async (index) =>{
-        const count = await this.deleteButton.count()
+        const count = await this.deleteButton.count();
         if(index < count){
-            await this.deleteButton.nth(index).click()
+            await this.deleteButton.nth(index).click();
         }
     }
 }
