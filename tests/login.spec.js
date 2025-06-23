@@ -1,5 +1,6 @@
 import {test,expect} from "@playwright/test";
 import { LoginPage } from "../page-objects/LoginPage";
+import { userInfo } from "../test-data/loginData";
 
 test.describe('Login Page Tests', () => {
     let loginPage;
@@ -9,12 +10,9 @@ test.describe('Login Page Tests', () => {
         await loginPage.visit();
     });
 
-    test('User logged in successfully', async() => {    
-        const userInfo = {
-            username: "tomsmith",
-            password: "SuperSecretPassword!"
-        }
-        await loginPage.fillCredentials(userInfo.username, userInfo.password);
+    test('User logged in successfully', async() => {  
+        const { username, password } = userInfo.valid  
+        await loginPage.fillCredentials(username, password);
         await loginPage.clickLoginButton();
         
         const successMessage = await loginPage.getSuccessMessage();
@@ -23,11 +21,8 @@ test.describe('Login Page Tests', () => {
 
 
     test('Login fails with incorrect username', async() =>{
-        const userInfo = {
-            username: "name",
-            password: "SuperSecretPassword!"
-        } 
-        await loginPage.fillCredentials(userInfo.username, userInfo.password);
+        const { username, password } = userInfo.invalidUsername 
+        await loginPage.fillCredentials(username, password);
         await loginPage.clickLoginButton();
         
         const invalidMessage = await loginPage.getInvalidMessage();
@@ -36,11 +31,8 @@ test.describe('Login Page Tests', () => {
 
 
     test('Login fails with incorrect password', async() =>{
-        const userInfo = {
-            username: "tomsmith",
-            password: "password"
-        } 
-        await loginPage.fillCredentials(userInfo.username, userInfo.password);
+        const { username, password } = userInfo.invalidPassword
+        await loginPage.fillCredentials(username, password);
         await loginPage.clickLoginButton();
         
         const invalidMessage = await loginPage.getInvalidMessage();
@@ -49,11 +41,8 @@ test.describe('Login Page Tests', () => {
 
 
     test('Login fails when username is missing', async() =>{
-        const userInfo = {
-            username: "",
-            password: "SuperSecretPassword!"
-        } 
-        await loginPage.fillCredentials(userInfo.username, userInfo.password);
+        const { username, password } = userInfo.missingUsername
+        await loginPage.fillCredentials(username, password);
         await loginPage.clickLoginButton();
         
         const invalidMessage = await loginPage.getInvalidMessage();
@@ -62,11 +51,8 @@ test.describe('Login Page Tests', () => {
 
 
     test('Login fails when password is missing', async() =>{
-        const userInfo = {
-            username: "tomsmith",
-            password: ""
-        } 
-        await loginPage.fillCredentials(userInfo.username, userInfo.password);
+        const { username, password } = userInfo.missingPassword
+        await loginPage.fillCredentials(username, password);
         await loginPage.clickLoginButton();
         
         const invalidMessage = await loginPage.getInvalidMessage();
@@ -83,11 +69,8 @@ test.describe('Login Page Tests', () => {
 
 
     test('Logout after successful login', async() => {  
-        const userInfo = {
-            username: "tomsmith",
-            password: "SuperSecretPassword!"
-        }
-        await loginPage.fillCredentials(userInfo.username, userInfo.password);
+        const { username, password } = userInfo.valid          
+        await loginPage.fillCredentials(username, password);
         await loginPage.clickLoginButton();
         
         const successMessage = await loginPage.getSuccessMessage();
@@ -97,4 +80,3 @@ test.describe('Login Page Tests', () => {
         await expect(successMessage).toContainText('You logged out of the secure area!');
     });
 });
-

@@ -1,19 +1,12 @@
 import {test, expect} from "@playwright/test";
+import path from 'path';
 import fs from 'fs';
 import { DownloadPage } from "../page-objects/DownloadPage";
+import { supportedFiles } from "../test-data/downloadFiles";
 
 // Test is skiped as /download page is unavailable 
-test.skip('User can download file successfuly', async ({page}) =>{
-    const downloadPage = new DownloadPage;
-    const supportedFiles = [
-        'test-file.pdf', 
-        'test-file.txt', 
-        'test-file.doxs', 
-        'test-file.xlsx', 
-        'test-file.jpg', 
-        'test-file.png', 
-        'test-file.js'
-    ]
+test('User can download file successfuly', async ({page}) =>{
+    const downloadPage = new DownloadPage(page);
 
     for(const fileName of supportedFiles){
         await downloadPage.visit();
