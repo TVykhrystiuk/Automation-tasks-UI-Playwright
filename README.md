@@ -7,7 +7,7 @@ This project contains automated UI tests using [Playwright](https://playwright.d
 ##  Getting Started
 
 ```bash
-#Install dependencies**
+#Install dependencies
 npm install
 
 #Install Playwright browsers
